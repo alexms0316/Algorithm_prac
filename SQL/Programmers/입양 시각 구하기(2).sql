@@ -1,0 +1,16 @@
+--1차 풀이
+SELECT HOUR(DATETIME) AS 'HOUR', COUNT(HOUR(DATETIME)) AS 'COUNT' 
+FROM ANIMAL_OUTS 
+WHERE 0<=HOUR(DATETIME)<24
+GROUP BY HOUR(DATETIME) 
+ORDER BY HOUR(DATETIME);
+
+--2차 풀이
+SET @hour := -1; -- 변수 선언
+SELECT (@hour := @hour + 1) as HOUR,
+(SELECT COUNT(*) FROM ANIMAL_OUTS WHERE HOUR(DATETIME) = @hour) as COUNT
+FROM ANIMAL_OUTS
+WHERE @hour < 23
+
+-- 갑자기 난이도가 상승해서 당황했음.. 
+-- SET 함수 사용법에 대해서 알게 됨.
